@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+{% block content %}
+
+{% with messages = get_flashed_messages(with_categories=True) %}
+{% if messages %} {% for category, message in messages %} {% if category == "error" %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% else %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+    <div class="shadow p-3 mb-5 bg-body rounded">
+        <form method="GET" action="{{ url_for('edit_question1')}}">
+            <br>
+            {{form.level(class="form-select form-select-sm w-auto" )}}
+            <br>
+            {{form.tag(class="form-select form-select-sm w-auto")}}
+            <br>
+            <input class="btn btn-success" type="submit" value="Filter">
+        </form>
+        <br><br>
+        <a href="{{ url_for('newtest') }}" id="newtest">Create question</a>
+            <br>
+        
+        <h1>Question Type 1</h1>
+        <form method="POST" action="">
+                {% for question in questions_list %}<br>
+                    
+                    {{loop.index}}. {{question.question}}          <a href="{{url_for('question',q_id=question.q_id)}}">Edit</a>
+                    <br>
+                        
+                        <name="{{question.q_id}}" value="{{question.option1}}"> {{question.option1}} <br>
+                        <name="{{question.q_id}}" value="{{question.option2}}"> {{question.option2}} <br>
+                        <name="{{question.q_id}}" value="{{question.option3}}"> {{question.option3}} <br>
+                        <name="{{question.q_id}}" value="{{question.option4}}"> {{question.option4}} <br><br>
+
+                        Correct Answer: {{question.answer}} <br>
+                        Feedback: {{question.feedback}}<br>
+                        <p style="text-align: left;color: rgb(204, 11, 5);border: 1px solid #000;display: inline-block;border-radius: 25px;padding: 2px;font-size: small;">{{question.level}}</p>
+                        <p style="text-align: left;color: rgb(13, 219, 30);border: 1px solid #000;display: inline-block;border-radius: 25px;padding: 2px;font-size: small;">Points: {{question.point}}</p> <p style="text-align: left;color: rgb(224, 192, 12);border: 1px solid #000;display: inline-block;border-radius: 25px;padding: 2px;font-size: small">{{question.tag}}</p><br>
+                        <form action="{{ url_for('delete', q_id=question.q_id) }}" method="POST"><input class="btn btn-danger" type="submit" value="Delete">
+                        </form>
+                        <br> <br> <br>
+                {% endfor %}
+
+        </form>
+    </div>
+                <br><br>
+{% endblock content %}

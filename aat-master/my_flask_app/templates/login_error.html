@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block content %}
+
+{% with messages = get_flashed_messages(with_categories=True) %}
+{% if messages %} {% for category, message in messages %} {% if category == "error" %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% else %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+
+  <h4>Failed to log in. Please try again.</h4>
+  <form method="POST" action="">
+    {{ form.csrf_token }}
+    <div>
+      <p>{{ form.username.label }} {{ form.username }}</p>
+      <p>{{ form.password.label }} {{ form.password }}</p>
+    </div>
+    
+    <p>{{form.submit}}</p>
+  </form>
+{% endblock content %}

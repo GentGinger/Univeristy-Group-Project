@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+{% block content %}
+
+{% with messages = get_flashed_messages(with_categories=True) %}
+{% if messages %} {% for category, message in messages %} {% if category == "error" %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% else %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+    <h1>Account details</h1>
+    <p>First Name: {{current_user.firstname}}</p>
+    <p>Username: {{current_user.username }}</p>
+
+    <h2>Stats</h2>
+    <p>Completed Summative Tests: {{current_user.summative_tests_completed}}</p>
+    <p>Completed Formative Tests: {{current_user.formative_tests_completed}}</p>
+    <p>Total Completed Tests: {{current_user.total_tests_completed}}</p>
+    <p>Total Points: {{current_user.points}}</p>
+ 
+    <h2>Achievements</h2>
+    {% with achievement = current_user.total_tests_completed %}
+    {% if achievement >= 1 %}
+        <p>Complete 1 Total Test: <img id="bronze" src="/static/img/coinBronze.png"></p>
+        <p><form action="/account/<coinBronze>">
+            <button name="coinBronze" type="submit">Bronze</button>
+            </form>
+        </p>
+    {% else %}
+        <p>Complete 1 Total Test: <img id="bronze" src="/static/img/coinGoldDull.png"></p> 
+    {% endif %}
+    {% if achievement >= 5 %}
+        <p>Complete 5 Total Test: <img id="silver" src="/static/img/coinSilver.png"></p>
+        <p><form action="/account/<coinSilver>">
+            <button name="coinSilver" type="submit">Silver</button>
+            </form>
+        </p>
+    {% else %}
+        <p>Complete 5 Total Test: <img id="silver" src="/static/img/coinGoldDull.png"></p> 
+    {% endif %}
+    {% if achievement >= 10 %}
+        <p>Complete 10 Total Test: <img id="gold" src="/static/img/coinGold.png"></p>
+        <p><form action="/account/<coinGold>">
+            <button name="coinGold" type="submit">Gold</button>
+            </form>
+        </p>
+    {% else %}
+        <p>Complete 10 Total Test: <img id="gold" src="/static/img/coinGoldDull.png"></p> 
+    {% endif %}
+    {% endwith %}
+    
+    
+{% endblock content %}
+

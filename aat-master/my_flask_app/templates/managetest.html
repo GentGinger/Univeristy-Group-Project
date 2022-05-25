@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block content %}
+
+{% with messages = get_flashed_messages(with_categories=True) %}
+{% if messages %} {% for category, message in messages %} {% if category == "error" %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% else %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+    <br><br>
+    <a href="{{ url_for('newtest') }}" id="newtest"> Create</a>&nbsp
+
+    <h1>Test Questions</h1>
+    <form method="POST" action="">
+            {% for question in questions_list %}<br>
+                {{question.q_id}}. {{question.question}}          <a href="{{url_for('question',q_id=question.q_id)}}">Edit</a>
+                <br>
+                    
+                    <name="{{question.q_id}}" value="{{question.option1}}"> {{question.option1}} <br>
+                    <name="{{question.q_id}}" value="{{question.option2}}"> {{question.option2}} <br>
+                    <name="{{question.q_id}}" value="{{question.option3}}"> {{question.option3}} <br>
+                    <name="{{question.q_id}}" value="{{question.option4}}"> {{question.option4}} <br><br>
+
+                    Correct Answer: {{question.answer}} <br>
+                    Feedback: {{question.feedback}}<br>
+                    <form action="{{ url_for('delete', q_id=question.q_id) }}" method="POST"><input class="btn btn-danger" type="submit" value="Delete">
+                    </form>
+                    <br> <br> <br>
+            {% endfor %}
+
+
+                <br><br>
+{% endblock content %}

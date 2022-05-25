@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% block content %}
+
+{% with messages = get_flashed_messages(with_categories=True) %}
+{% if messages %} {% for category, message in messages %} {% if category == "error" %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% else %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+<div class="shadow p-3 mb-5 bg-body rounded">
+    <form action="/submitsummative", method="post"></form>
+    <h1>Summative Results</h1><br><br>
+
+    <h4>{{count}} Questions Correct Out Of {{total_questions}}</h4>
+    <h3>Marks: {{score}}/32<br><br></h3>
+    
+            {% for question in questions_list %}
+                {{question.q_id}}. {{question.question}} {{question.answered_question}} <br>
+                    <!--<name="{{question.q_id}}" value="{{question.option1}}"> {{question.option1}} <br>
+                    <name="{{question.q_id}}" value="{{question.option2}}"> {{question.option2}} <br>
+                    <name="{{question.q_id}}" value="{{question.option3}}"> {{question.option3}} <br>
+                    <name="{{question.q_id}}" value="{{question.option4}}"> {{question.option4}} <br><br>-->
+                    Level: {{question.level}}<br>
+                    Marks: {{question.point}}<br>
+                    <!--Your answer: {{answered_questions_list.answered_question}}<br-->
+                    Feedback: {{question.feedback}}
+                    <br> <br> <br>
+            {% endfor %}
+            Your answers :
+            <li> 1.{{answered_questions_list.0}}<br></li>
+            <li> 2.{{answered_questions_list.1}}<br></li>
+            <li> 3.{{answered_questions_list.2}}<br></li>
+            <li> 4.{{answered_questions_list.3}}<br></li>
+            <li> 5.{{answered_questions_list.4}}<br></li>
+            <li> 6.{{answered_questions_list.5}}<br></li>
+            <li> 7.{{answered_questions_list.6}}<br></li>
+            <li> 8.{{answered_questions_list.7}}<br></li>
+            <li> 9.{{answered_questions_list.8}}<br></li>
+            <li> 10.{{answered_questions_list.9}}<br></li>
+            <br>
+            <button type="button" class="btn btn-secondary"><a href="{{ url_for('assessments') }}"id="assessment" style="color: white" >Take Assessment page</a></button>&nbsp
+         </div>
+                <br><br>
+{% endblock content %}

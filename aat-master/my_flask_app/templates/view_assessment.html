@@ -1,0 +1,113 @@
+<!-- Samuel. View the assessment in the database. -->
+{% extends "layout.html" %}
+{% block content %}
+
+{% with messages = get_flashed_messages(with_categories=True) %}
+{% if messages %} {% for category, message in messages %} {% if category == "error" %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% else %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+<h2 align="center">View assessment</h2>
+{% set assessment_no = namespace(value=1) %}
+{% for assessment in assessment_list %}
+    <div class="shadow p-3 mb-5 bg-body rounded">
+    <h2>{{ assessment_no.value }} {{ assessment.assessment_name }}</h2>
+    {% set assessment_no.value = assessment_no.value + 1 %}
+    <a href="{{ url_for('editassessment',assessment_id=assessment.assessment_id) }}"><input class="btn btn-warning m-2" type="submit" value="Edit"></a>
+    <form action="{{ url_for('deleteassessment',assessment_id=assessment.assessment_id) }}" method="POST"><input class="btn btn-danger mb-5" type="submit" value="Delete"></form>
+    <p>Module: {{ assessment.module_id }}</p>
+    <p>Start Date: {{ assessment.start_date }}</p>
+    <p>End Date: {{ assessment.end_date }}</p>
+    <p>Assessment Type: {{ assessment.assessment_type }}</p>
+    <p>General Comment: {{ assessment.comment }}</p>
+
+    {% set q_type1 = namespace(value=0) %}
+    {% set q_type2 = namespace(value=0) %}
+    {% for set in questionset %}
+        {% if set.set_no == assessment.question_set_no %}
+            {% if set.question_id != none %}
+                {% set q_type1.value = 1 %}
+            {% endif %}
+            {% if set.question_id2 != none %}
+                {% set q_type2.value = 1 %}
+            {% endif %}
+        {% endif %}
+    {% endfor %}
+
+    {% if q_type1.value == 1 %}
+
+    <table class="table table-striped caption-top">
+        <caption>Question Type 1</caption>
+        <thead>
+        <tr>
+            <th scope="col">Question</th>
+            <th scope="col">answer</th>
+            <th scope="col">feedback</th>
+            <th scope="col">Level</th>
+            <th scope="col">Point</th>
+            <th scope="col">Tag</th>    
+        </tr>
+        </thead>
+        <tbody>
+            {% for set in questionset %}
+                {% if set.set_no == assessment.question_set_no %}
+                {% if set.question_id != none %}
+                    <tr>
+                    <td>{{ question_list[(set.question_id)-1].question }}</td>
+                    <td>{{ question_list[(set.question_id)-1].answer }}</td>
+                    <td>{{ question_list[(set.question_id)-1].feedback }}</td>
+                    <td>{{ question_list[(set.question_id)-1].level }}</td>
+                    <td>{{ question_list[(set.question_id)-1].point }}</td>
+                    <td>{{ question_list[(set.question_id)-1].tag }}</td>
+                    </tr>
+                {% endif %}
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+  {% endif %}
+  {% if q_type2.value == 1 %}
+  <table class="table table-striped caption-top">
+    <caption>Question Type 2</caption>
+    <thead>
+    <tr>
+        <th scope="col">Question</th>
+        <th scope="col">Answer</th>
+        <th scope="col">Feedback</th>
+        <th scope="col">Level</th>
+        <th scope="col">Point</th>
+        <th scope="col">Tag</th>
+    </tr>
+    </thead>
+    <tbody>
+        {% for set in questionset %}
+            {% if set.set_no == assessment.question_set_no %}
+            {% if set.question_id2 != none %}
+                <tr>
+                <td>{{ question_list2[(set.question_id2)-1].text }}</td>
+                <td>{{ question_list2[(set.question_id2)-1].answer2 }}</td>
+                <td>{{ question_list2[(set.question_id2)-1].feedback2 }}</td>
+                <td>{{ question_list2[(set.question_id2)-1].level2 }}</td>
+                <td>{{ question_list2[(set.question_id2)-1].point2 }}</td>
+                <td>{{ question_list2[(set.question_id2)-1].tag2 }}</td>
+                </tr>
+            {% endif %}
+            {% endif %}
+        {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+  </div>
+{% endfor %}
+{% endblock content %}

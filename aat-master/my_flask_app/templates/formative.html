@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block content %}
+
+{% with messages = get_flashed_messages(with_categories=True) %}
+{% if messages %} {% for category, message in messages %} {% if category == "error" %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% else %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+<div class="shadow p-3 mb-5 bg-body rounded">
+    <h1>Formative Assessments</h1>
+
+    <form action="/submitformative", method="POST">
+        
+        {% for text in questions_list %}
+            {{text.id}}. {{text.text}}<br> 
+
+                <input type="radio" name="{{text.id}}" id ="option2a" value="{{text.option2a}}"> {{text.option2a}} <br>
+                <input type="radio" name="{{text.id}}" id ="option2b" value="{{text.option2b}}"> {{text.option2b}} <br><br> 
+                Marks: {{text.point2}}<br><br>
+        {% endfor %}
+        
+        <form action="/submitformative", method="post">
+ 
+            <br><br>
+        
+            <input class="btn btn-dark" type="submit" name="submitform" value="Submit">
+        </form>
+    </div>
+     
+
+{% endblock content %}

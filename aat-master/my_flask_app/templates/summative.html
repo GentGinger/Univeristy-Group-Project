@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block content %}
+
+{% with messages = get_flashed_messages(with_categories=True) %}
+{% if messages %} {% for category, message in messages %} {% if category == "error" %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% else %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+    <h1>Summative Assessments</h1>
+
+
+    <form action="/submitsummative", method="POST">
+        <div class="shadow p-3 mb-5 bg-body rounded">
+
+        
+        {% for question in questions_list %}
+            {{question.q_id}}. {{question.question}} <br>
+                <input type="radio" name="{{question.q_id}}" value="{{question.option1}}"> {{question.option1}} <br>
+                <input type="radio" name="{{question.q_id}}" value="{{question.option2}}"> {{question.option2}} <br>
+                <input type="radio" name="{{question.q_id}}" value="{{question.option3}}"> {{question.option3}} <br>
+                <input type="radio" name="{{question.q_id}}" value="{{question.option4}}"> {{question.option4}} <br> <br>
+                Marks: {{question.point}}<br><br>
+                <br>
+        {% endfor %}
+     
+                <br><br>
+                <input type="submit" name="submitform" value="Submit">
+            </form> 
+        </div>             
+{% endblock content %}

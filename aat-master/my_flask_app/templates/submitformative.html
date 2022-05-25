@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+{% block content %}
+
+{% with messages = get_flashed_messages(with_categories=True) %}
+{% if messages %} {% for category, message in messages %} {% if category == "error" %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% else %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+<div class="shadow p-3 mb-5 bg-body rounded">
+
+
+<form action="/submitformative", method="post"></form>
+
+   
+    <h1>Formative Results</h1><br><br>
+    <h4>{{count}} Questions Correct Out Of {{total_questions}}</h4>
+    
+    
+
+    Marks: {{score}}/30<br><br>
+
+
+    
+            {% for text in questions_list %}
+                {{text.id}}. {{text.text}}  <br>
+                    <name="{{text.id}}" value="{{text.option2a}}"> {{text.option2a}} <br>
+                    <!--<name="{{text.id}}" value="{{text.option2b}}"> {{text.option2b}}  <br><br>-->
+
+
+                    Level: {{text.level2}}<br>
+                    Marks:{{text.point2}}<br>
+                    Correct Answer: {{text.answer2}} <br>
+                    Feedback: {{text.feedback2}}
+                    <br> <br> <br>
+            {% endfor %}
+            Your answers :
+           <li> 1.{{answered_questions_list.0}}<br></li>
+           <li> 2.{{answered_questions_list.1}}<br></li>
+           <li> 3.{{answered_questions_list.2}}<br></li>
+           <li> 4.{{answered_questions_list.3}}<br></li>
+           <li> 5.{{answered_questions_list.4}}<br></li>
+           
+           <br><br>
+
+
+            <button type="button" class="btn btn-secondary"><a href="{{ url_for('assessments') }}"id="assessment" style="color: white" >Take Assessment page</a></button>&nbsp
+            <button type="button" class="btn btn-secondary"><a href="{{ url_for('comment') }}"id="comment" style="color: white" >Comment</a></button>&nbsp
+        </div>
+
+                <br><br>
+{% endblock content %}

@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+{% block content %}
+
+{% with messages = get_flashed_messages(with_categories=True) %}
+{% if messages %} {% for category, message in messages %} {% if category == "error" %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% else %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+    <h1>Leader Score Tables</h1>
+    <table class="table">
+        <tr>
+            <th>User ID</th>
+            <th>Highest Score</th>
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td><img id="profile" src="static/img/{{current_user.profilePic}}" alt="Avatar" class="avatar">{{ user.firstname }}</td>
+            <td>{{ user.user_highestMark }}</td>
+        </tr>
+        {% endfor %}
+    <h1>Most Tests Completed</h1>
+    <table class="table">
+        <tr>
+            <th>User ID</th>
+            <th>Completed Tests</th>
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td><img id="profile" src="static/img/{{current_user.profilePic}}" alt="Avatar" class="avatar">{{ user.firstname }}</td>
+            <td>{{ user.total_tests_completed}}</td>
+        </tr>
+        {% endfor %}
+{% endblock content %}

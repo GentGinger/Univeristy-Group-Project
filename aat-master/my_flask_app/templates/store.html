@@ -1,0 +1,115 @@
+{% extends "layout.html" %}
+{% block content %}
+
+{% with messages = get_flashed_messages(with_categories=True) %}
+{% if messages %} {% for category, message in messages %} {% if category == "error" %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% else %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+    <h1>Point Store</h1>
+        <p>First Name: {{current_user.firstname}}</p>
+        <p>Total Points: {{current_user.points}}</p>
+    <h2>Badges and Layouts</h2>
+        <p>Default Badge<img id="default" src="/static/img/hud_p1.png"></p>
+        <p><form action="/store/<hud_p1>">
+        <button name="defaultBadge" type="submit">Default Badge</button>
+        </form>
+        </p>
+    {% if 'G' in current_user.ownedBadges %}
+        <p>Green Thin<img id="greenbdg" src="/static/img/greenbdg.png"></p>
+        <p><form action="/store/<greenbdg>">
+        <button name="greenbdg" type="submit">Green Badge</button>
+            </form>
+        </p>
+    {% endif %}
+    {% if 'B' in current_user.ownedBadges %}
+    <p>Blue Thin<img id="bluebdg" src="/static/img/bluebdg.png"></p>
+    <p><form action="/store/<bluebdg>">
+    <button name="bluebdg" type="submit">Blue Badge</button>
+        </form>
+    </p>
+    {% endif %}
+    {% if 'P' in current_user.ownedBadges %}
+    <p>Pink Thin<img id="pinkbdg" src="/static/img/pinkbdg.png"></p>
+    <p><form action="/store/<pinkbdg>">
+    <button name="pinkbdg" type="submit">Pink Badge</button>
+        </form>
+    </p>
+    {% endif %}
+    <p><button type="button" onclick="defaultColour()">Default Background</button>
+    </p>
+    {% if 'G' in current_user.ownedBackgrounds %}
+    <p><button type="button" onclick="greenColour()">Green Background</button>
+    </p>
+    {% else %}
+    {% endif %}
+    {% if 'B' in current_user.ownedBackgrounds %}
+    <p><button type="button" onclick="blueColour()">Blue Background</button>
+    </p>
+    {% else %}
+    {% endif %}
+
+    <h2>Badges</h2>
+    {% with points = current_user.points %}
+        {% if points >= 3 %}
+        <p>Green Badge<img id="Buygreen" src="/static/img/greenbdg.png"></p>
+        <p><form action="/store/buyG">
+            <button name="buygreen" type="submit">Buy</button>
+            </form>
+        </p>
+        {% else %}
+        <p>Green Badge<img id="greenbdg" src="/static/img/greenbdg.png"></p>
+        {% endif %}
+
+    {% if points >= 6 %}
+    <p>Blue Badge<img id="Buyblue" src="/static/img/bluebdg.png"></p>
+    <p><form action="/store/buyB">
+        <button name="buyblue" type="submit">Buy</button>
+        </form>
+    </p>
+    {% else %}
+    <p>Blue Badge<img id="bluebdg" src="/static/img/bluebdg.png"></p>
+    {% endif %}
+
+    {% if points >= 9 %}
+    <p>Pink Badge<img id="Buypink" src="/static/img/pinkbdg.png"></p>
+    <p><form action="/store/buyP">
+        <button name="buypink" type="submit">Buy</button>
+        </form>
+    </p>
+    {% else %}
+    <p>Pink Badge<img id="pinkbdg" src="/static/img/pinkbdg.png"></p>
+    {% endif %}
+
+    <h2>Backgrounds</h2>
+    {% if points >= 3 %}
+    <p>Blue Background<img id="Buyblue" src="/static/img/flagBlue.png"></p>
+    <p><form action="/store/buyBB">
+        <button name="buyblue" type="submit">Buy</button>
+        </form>
+    </p>
+    {% else %}
+    <p>Green Background<img id="greenflag" src="/static/img/flagBlue.png"></p>
+    {% endif %}
+    {% if points >= 3 %}
+    <p>Buy<img id="Buygreen2" src="/static/img/flagGreen2.png"></p>
+    <p><form action="/store/buyBG">
+        <button name="buygreenB" type="submit">Buy</button>
+        </form>
+    </p>
+    {% else %}
+    <p>Buy<img id="greenbdg" src="/static/img/flagGreen2.png"></p>
+    {% endif %}
+    {% endwith %}
+{% endblock content %}

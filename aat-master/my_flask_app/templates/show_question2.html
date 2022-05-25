@@ -1,0 +1,69 @@
+{% extends "layout.html" %}
+{% block content %}
+
+{% with messages = get_flashed_messages(with_categories=True) %}
+{% if messages %} {% for category, message in messages %} {% if category == "error" %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% else %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+<div class="shadow p-3 mb-5 bg-body rounded">
+    <form method="GET" action="{{ url_for('show_question2')}}">
+        {{form.level2(class="form-select form-select-sm w-auto")}} 
+        <br>
+        {{form.tag2(class="form-select form-select-sm w-auto")}}
+        <br>
+        <input class="btn btn-primary btn-sm" type="submit" value="Filter">
+    </form>
+    <br><br>
+    <a href="{{ url_for('add_question2') }}" id="add_question2" class="btn btn-success">Create a new True or False question</a>
+        <br><br>
+
+
+<!-- Showing questions-->
+
+<h2 align="center">Question Type 2</h2>
+
+<h3 align="center">You have created the following True or False questions:</h3>
+<br>
+<form method="POST" action="">
+    {% for question2 in questions2_list %}
+            {{ loop.index }}.
+            {{ question2.text }}
+            <br />
+            <input type="radio" value="True"> {{ question2.option2a }}
+            <br />
+            <input type="radio" value="False"> {{ question2.option2b }}
+            <br />
+            <br />
+            <p class="answer"> Correct Answer: {{ question2.answer2 }} </p>
+            <p class="feedback">Feedback: {{ question2.feedback2 }}</p>
+            <p class="level"
+                style="text-align:left; color: rgb(204, 11, 5); border:1px solid #000; display:inline-block; border-radius:25px; padding:7px; font-size:small">
+                Level of Difficulty: {{ question2.level2 }}</p> 
+            <p class="points"
+                style="text-align:left; color: rgb(29, 160, 29); border:1px solid #000; display:inline-block; border-radius:25px; padding:7px; font-size:small">
+                Points: {{ question2.point2 }}</p>
+            <p class="tags"
+                style="text-align:left; color: rgb(223, 154, 26); border:1px solid #000; display:inline-block; border-radius:25px; padding:7px; font-size:small">
+                Tag: {{ question2.tag2 }}</p>
+            <br>
+            <a href="/edit-question/{{question2.id}}" class="btn btn-warning">Edit Question</a>
+            <a href="/delete-question/{{question2.id}}" class="btn btn-danger" type="submit" value="Delete">Delete Question</a>
+    <br />
+</form>
+<br> <br> <br>
+    {% endfor %}
+</div>
+
+{% endblock content %}

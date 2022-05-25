@@ -1,0 +1,94 @@
+<!-- Samuel.  Create assessment from questions in database.-->
+{% extends "layout.html" %}
+{% block content %}
+
+{% with messages = get_flashed_messages(with_categories=True) %}
+{% if messages %} {% for category, message in messages %} {% if category == "error" %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% else %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+<div class="shadow p-3 mb-5 bg-body rounded">
+  <h2 align="center">Create new assessment</h2>
+<form method="POST" action="">
+  {{ form.csrf_token }}
+  <p>{{ form.assessment_name.label(class="form-label") }} {{ form.assessment_name(class="form-control", rows="5") }}</p>
+  <p>{{ form.module_id.label(class="form-label") }} {{ form.module_id(class="form-control", rows="5") }}</p>
+  <p>{{ form.start_date.label(class="form-label") }} {{ form.start_date(class="form-control", rows="5") }}</p>
+  <p>{{ form.end_date.label(class="form-label") }} {{ form.end_date(class="form-control", rows="5") }}</p>
+  <p>{{ form.assessment_type.label(class="form-label") }} {{ form.assessment_type(class="form-label") }}</p>
+  <p>{{ form.comment.label(class="form-label") }} {{ form.comment(class="form-control", rows="5") }}</p>
+
+  <div class="shadow p-3 mb-5 bg-body rounded">
+  <table class="table table-striped caption-top">
+    <caption>Question Type 1</caption>
+    <thead>
+    <tr>
+      <th scope="col">Include this Question</th>
+      <th scope="col">Question</th>
+      <th scope="col">Answer</th>
+      <th scope="col">Feedback</th>
+      <th scope="col">Level</th>
+      <th scope="col">Point</th>
+      <th scope="col">Tag</th> 
+    </tr>
+    </thead>
+    <tbody>
+    {% for question in questions_list %}
+    <tr>
+      <td><input type="checkbox" value={{ question.q_id }} name="include_q" checked></td>
+      <td>{{ question.question }}</td>
+      <td>{{ question.answer }}</td>
+      <td>{{ question.feedback }}</td>
+      <td>{{ question.level }}</td>
+      <td>{{ question.point }}</td>
+      <td>{{ question.tag }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+
+  <div class="shadow p-3 mb-5 bg-body rounded">
+  <table class="table table-striped caption-top">
+    <caption>Question Type 2</caption>
+    <thead>
+    <tr>
+      <th scope="col">Include this Question</th>
+      <th scope="col">Question</th>
+      <th scope="col">Answer</th>
+      <th scope="col">Feedback</th>
+      <th scope="col">Level</th>
+      <th scope="col">Point</th>
+      <th scope="col">Tag</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for question in questions_list2 %}
+    <tr>
+      <td><input type="checkbox" value={{ question.id }} name="include_q2" checked></td>
+      <td>{{ question.text }}</td>
+      <td>{{ question.answer2 }}</td>
+      <td>{{ question.feedback2 }}</td>
+      <td>{{ question.level2 }}</td>
+      <td>{{ question.point2 }}</td>
+      <td>{{ question.tag2 }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  <p><input class="btn btn-primary btn-sm" type="submit" value="Create"></p>
+</form>
+</div>
+{% endblock content %}

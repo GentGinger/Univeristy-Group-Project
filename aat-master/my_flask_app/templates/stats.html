@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% block content %}
+
+{% with messages = get_flashed_messages(with_categories=True) %}
+{% if messages %} {% for category, message in messages %} {% if category == "error" %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% else %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+  <br>
+  <button id ="hidebutton" onclick="hideFunction()">Get results for Student</button>
+  <br>
+  <br>
+  <script>
+    function hideFunction() {
+      var i = document.getElementById("Cohort")
+      var x = document.getElementById("Student")
+      var v = document.getElementById("hidebutton")
+      if (i.style.display === "none") {
+        i.style.display = "inline"
+        x.style.display = "none"
+        v.innerHTML = "Get results for Student"
+      }
+      else {
+        i.style.display = "none"
+        x.style.display = "inline"
+        v.innerHTML = "Get results for Cohort"
+      }
+    }
+  </script>
+  <b><p>Choose Parameters:</p></b>
+  <form method="POST" action="">
+    <a id="Cohort" >Cohort: {{ form.cohorts}}</a>
+    <a id="Student" style="display:none">Student: {{ form.students }}</a>
+    <a>Assement: {{ form.assesements }}</a>
+  <br>
+  <br>
+  <input type="submit" value="Submit" name="submit"> 
+  <b>Average score: {{ stat }}</b>
+  </form>
+  <br>
+  <br>
+  <b>Note: 'All Students' and 'All Cohorts' are included for conveniance although both should give same result unless there is a student yet to be allocated to a cohort taking an assesment</b>
+{% endblock content %}

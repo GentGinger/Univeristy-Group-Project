@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block content %}
+
+{% with messages = get_flashed_messages(with_categories=True) %}
+{% if messages %} {% for category, message in messages %} {% if category == "error" %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% else %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+<form action="/submittest", method="post"></form>
+    <h1>Test Sample 1</h1>
+    <h4>{{count}} questions out of 3</h4>
+    
+            {% for question in questions_list %}
+                {{question.q_id}}. {{question.question}} <br>
+                    <name="{{question.q_id}}" value="{{question.option1}}"> {{question.option1}} <br>
+                    <name="{{question.q_id}}" value="{{question.option1}}"> {{question.option2}} <br>
+                    <name="{{question.q_id}}" value="{{question.option1}}"> {{question.option3}} <br>
+                    <name="{{question.q_id}}" value="{{question.option1}}"> {{question.option4}} <br><br>
+
+                    Your Answer: <br>
+                    Correct Answer: {{question.answer}} <br>
+                    Feedback: {{question.feedback}}
+                    <br> <br> <br>
+            {% endfor %}
+
+
+                <br><br>
+{% endblock content %}

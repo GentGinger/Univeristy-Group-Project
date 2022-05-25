@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% block content %}
+
+{% with messages = get_flashed_messages(with_categories=True) %}
+{% if messages %} {% for category, message in messages %} {% if category == "error" %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% else %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+    <h1>Assessments</h1>
+    <div class="container  p-3 mb-2 bg-light text-dark border border-dark rounded">
+        <p>Below you will find a series of assessments that you will be able to complete, please take note of the type of assessment as formative assessments will go towards your final grade, where as formative assessments should be used to test yourself and will give feedback on areas that you should focus on more</p>
+    </div>  
+    <div class="container  p-3 mb-2 bg-light text-dark border border-dark rounded">
+        <h2>Economics Assessment</h2>
+        <lu>
+            <li>This assessment will test your knowledge on key Economic topics </li>
+            <li>Marks Available: 32</li>
+            <li>Assessment Type: Summative</li>
+        </lu>
+    </br>
+        <button type="button"  class="btn btn-secondary"><a href="{{ url_for('summative') }}" id="summative"style="color: white">Start</a></button>&nbsp
+    </div>  
+
+    <div class="container p-3 mb-2 bg-light text-dark border border-dark rounded"> 
+        <h2>Programming Assessment</h2>
+        <lu>
+            <li>This assessment will test your knowledge on key Computer Science topics </li>
+            <li>Marks Available: 30</li>
+            <li>Assessment Type: Formative</li>
+        </lu>
+    </br>
+        <button type="button" class="btn btn-secondary"><a href="{{ url_for('formative') }}"id="formative" style="color: white" >Start</a></button>&nbsp
+    </div>
+    
+
+            
+     
+
+{% endblock content %}

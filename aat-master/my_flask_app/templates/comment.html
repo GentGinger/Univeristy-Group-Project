@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block content %}
+
+{% with messages = get_flashed_messages(with_categories=True) %}
+{% if messages %} {% for category, message in messages %} {% if category == "error" %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% else %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+<div class="shadow p-3 mb-5 bg-body rounded">
+    <form method="POST" action="">
+        {{ form.csrf_token }}
+            <h2 align="center">Formative assessment comment section</h2>
+                <p>{{ form.content.label(class="form-label") }} {{ form.content(class="form-control", rows="5") }}</p>
+                <p><input class="btn btn-primary" type="submit" value="Comment"></p>
+    </form>
+    <br> <br>
+        
+    <h3>Comment List</h3>
+    {% for comment in comment_list %}
+    <p>{{ comment.id }}. {{ comment.author.firstname }}&nbsp;&nbsp;&nbsp;{{ comment.create_time.strftime('%Y-%m-%d   %H:%M') }}</p>
+    <p>{{ comment.content }}</p>
+    <br>
+    {% endfor %}
+</div>
+    
+{% endblock content %}

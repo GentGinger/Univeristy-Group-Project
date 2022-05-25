@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% block content %}
+
+{% with messages = get_flashed_messages(with_categories=True) %}
+{% if messages %} {% for category, message in messages %} {% if category == "error" %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% else %}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+    <div class="shadow p-3 mb-5 bg-body rounded">
+        <form method="POST" action="">
+            {{ form.csrf_token }}
+            <h4>Edit Question</h4>
+                <p>{{ form.question.label(class="form-label") }}{{ form.question(class="form-control", rows="5") }}</p>
+                <br>
+                <p>{{ form.option1.label(class="form-label") }} {{ form.option1(class="form-control", rows="5") }}</p>
+                <br>
+                <p>{{ form.option2.label(class="form-label") }} {{ form.option2(class="form-control", rows="5") }}</p>
+                <br>
+                <p>{{ form.option3.label(class="form-label") }} {{ form.option3(class="form-control", rows="5") }}</p>
+                <br>
+                <p>{{ form.option4.label(class="form-label") }} {{ form.option4(class="form-control", rows="5") }}</p>
+                <br>
+                <p>{{ form.answer.label(class="form-label") }} {{ form.answer(class="form-control", rows="5") }}</p>
+                <br>
+                <p>{{ form.feedback.label(class="form-label") }}{{ form.feedback(class="form-control", rows="5") }}</p>
+                <br>
+                <p>{{ form.level.label}} {{ form.level }}</p>
+                <p>{{ form.tag.label}} {{ form.tag }}</p>
+                <p>{{ form.point.label}} {{ form.point }}</p>
+                <br>
+
+                <input class="btn btn-primary" type="submit" value="Update">
+        </form>
+    </div>
+{% endblock content %}
